@@ -1,2 +1,3 @@
 # WWHook
-The most advanced discord webhook modifier accessible on web.
+An advanced webhook manager for Discord.
+https://byeoon.github.io/WWHook
