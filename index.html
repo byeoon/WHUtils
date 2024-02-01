@@ -20,36 +20,6 @@
     <script src="https://cdn.jsdelivr.net/npm/discord.js@14.14.1/src/index.min.js"></script>
 
 <script>
-    let debugMode = false;
-    let embedMode = false;
-    
-    debugModecb.addEventListener("change", () => {
-        if (debugModecb.checked) {
-            debugMode = true;
-        } else {
-            debugMode = false;
-        }
-    });
-
-    deletecb.addEventListener("change", () => {
-        if (deletecb.checked) {
-            document.getElementById("config").style.display = "none";
-            deletebutton.style.visibility = "visible";
-        } else {
-            document.getElementById("config").style.display = "block";
-            deletebutton.style.visibility = "hidden";
-        }
-    });
-
-    embedmodecb.addEventListener("change", () => {
-        if (embedmodecb.checked) {
-            document.getElementById("embedconfig").style.display = "none";
-            embedMode = true;
-        } else {
-            document.getElementById("embedconfig").style.display = "block";
-            embedMode = false;
-        }
-    });
 
 </script>
 
@@ -102,6 +72,39 @@
 </html>
 
 <script>
+
+let debugMode = false;
+let embedMode = false;
+    
+    debugModecb.addEventListener("change", () => {
+        if (debugModecb.checked) {
+            debugMode = true;
+        } else {
+            debugMode = false;
+        }
+    });
+
+    deletecb.addEventListener("change", () => {
+        if (deletecb.checked) {
+            document.getElementById("config").style.display = "none";
+            deletebutton.style.visibility = "visible";
+        } else {
+            document.getElementById("config").style.display = "block";
+            deletebutton.style.visibility = "hidden";
+        }
+    });
+
+    embedmodecb.addEventListener("change", () => {
+        if (embedmodecb.checked) {
+            document.getElementById("embedconfig").style.display = "none";
+            embedMode = true;
+        } else {
+            document.getElementById("embedconfig").style.display = "block";
+            embedMode = false;
+        }
+    });
+
+
     function sendWebhook() {
         var webhookUrl = document.getElementById("url").value;
         var webhookUsername = document.getElementById("username").value;
