@@ -19,6 +19,39 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/discord.js@14.14.1/src/index.min.js"></script>
 
+<script>
+    let debugMode = false;
+    let embedMode = false;
+    
+    debugModecb.addEventListener("change", () => {
+        if (debugModecb.checked) {
+            debugMode = true;
+        } else {
+            debugMode = false;
+        }
+    });
+
+    deletecb.addEventListener("change", () => {
+        if (deletecb.checked) {
+            document.getElementById("config").style.display = "none";
+            deletebutton.style.visibility = "visible";
+        } else {
+            document.getElementById("config").style.display = "block";
+            deletebutton.style.visibility = "hidden";
+        }
+    });
+
+    embedmodecb.addEventListener("change", () => {
+        if (embedmodecb.checked) {
+            document.getElementById("embedconfig").style.display = "none";
+            embedMode = true;
+        } else {
+            document.getElementById("embedconfig").style.display = "block";
+            embedMode = false;
+        }
+    });
+
+</script>
 
 </head>
 
@@ -29,7 +62,7 @@
         <h6>An advanced webhook manager for Discord.</h6>
         <br>
         <input type="checkbox" id="debugModecb" name="debugModecb" />
-        <label for="debugModecb">Enable Debug Mode <b>(Enables alert output on webhook send)</b></label>
+        <label for="debugModecb">Debug Mode <b>(Debug text on webhook send)</b></label>
 <br>
         <input type="checkbox" id="embedmodecb" name="embedmodecb" />
         <label for="embedmodecb">Embed Mode <b>(WIP)</b></label>
@@ -69,38 +102,6 @@
 </html>
 
 <script>
-    let debugMode = false;
-    let embedMode = false;
-    
-    debugModecb.addEventListener("change", () => {
-        if (debugModecb.checked) {
-            debugMode = true;
-        } else {
-            debugMode = false;
-        }
-    });
-
-    deletecb.addEventListener("change", () => {
-        if (deletecb.checked) {
-            document.getElementById("config").visibility = "hidden";
-            deletebutton.style.visibility = "visible";
-        } else {
-            document.getElementById("config").visibility = "visible";
-            deletebutton.style.visibility = "hidden";
-        }
-    });
-
-    embedmodecb.addEventListener("change", () => {
-        if (embedmodecb.checked) {
-            document.getElementById("embedconfig").visibility = "visible";
-            embedMode = true;
-        } else {
-            document.getElementById("embedconfig").visibility = "hidden";
-            embedMode = false;
-        }
-    });
-
-
     function sendWebhook() {
         var webhookUrl = document.getElementById("url").value;
         var webhookUsername = document.getElementById("username").value;
