@@ -3,6 +3,33 @@ body {
     color: #fff;
 }
 
-h5 {
+h1, h5 {
     color: #192a8a; 
+    font-weight: bold;
 }
+
+#sendbutton, #getbutton, #deletebutton {
+    color: #d3f6ff;
+    background-color: #123959;
+    border: none;
+    padding: 0.5rem 1.20rem;
+    border-radius: 1.05rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+#sendbutton:hover, #getbutton:hover, #deletebutton:hover {
+    background-color: #0c2d47;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(4, 0, 41);
+    color: white;
+    text-align: center;
+  }

@@ -19,26 +19,26 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/discord.js@14.14.1/src/index.min.js"></script>
 
-<script>
+    <script>
 
-</script>
+    </script>
 
 </head>
 
 <body>
     <br>
     <center>
-        <h5>WWHook 1.0</h5>
+        <h1>WWHook 1.0</h1>
         <h6>An advanced webhook manager for Discord.</h6>
         <br>
         <input type="checkbox" id="debugModecb" name="debugModecb" />
-        <label for="debugModecb">Debug Mode <b>(Debug text on webhook send)</b></label>
-<br>
+        <label for="debugModecb">Print Info to Console</label>
+        <br>
         <input type="checkbox" id="embedmodecb" name="embedmodecb" />
-        <label for="embedmodecb">Embed Mode <b>(WIP)</b></label>
-<br>
+        <label for="embedmodecb">Send Embedded Message<b>(WIP)</b></label>
+        <br>
         <input type="checkbox" id="deletecb" name="deletecb" />
-        <label for="deletecb">Webhook Deletion Mode <b></b></label>
+        <label for="deletecb">Webhook Deletion Mode</label>
 
         <br>
         <br>
@@ -46,36 +46,65 @@
         <input type="text" id="url" name="url"><br><br>
         <div id="config">
 
-        <label for="username">Webhook Username:</label>
-        <input type="text" id="username" name="username"><br><br>
+            <label for="username">Webhook Username:</label>
+            <input type="text" id="username" name="username"><br><br>
 
-        <label for="webhookavatar">Webhook Avatar: (Leave blank to use default)</label>
-        <input type="text" id="webhookavatar" name="webhookavatar"><br><br>
+            <label for="webhookavatar">Webhook Avatar: (Leave blank to use default)</label>
+            <input type="text" id="webhookavatar" name="webhookavatar"><br><br>
 
-        <label for="webhooktext">Webhook Text:</label>
-        <input type="text" id="webhooktext" name="webhooktext"><br><br>
+            <label for="webhooktext">Webhook Text:</label>
+            <input type="text" id="webhooktext" name="webhooktext"><br><br>
+            <button onclick="sendWebhook()" id="sendbutton">Send</button>
+            <button onclick="getWebhookInfo()" id="getbutton">Get Webhook Info</button>
 
-        <button onclick="sendWebhook()" id="sendbutton">Send</button>
-    </div>
-        <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
+        </div>
 
         <div id="embedconfig">
             <h5>Author Label</h5>
             <label for="embedauthor">Author Name:</label>
             <input type="text" id="embedauthor" name="embedauthor"><br><br>
+        </div>
 
+
+
+        <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
+        <br>
+
+
+        <br>
+        <div id="webhook-info" style="display: none;">
+            <h5>About This Webhook</h6>
+                <br>
+                <h6>Webhook Profile Picture: <img id="webhookDCPFP"></img> </h6>
+                <h6 id="webhookDCName">Current Username:</h6>
+                <h6 id="webhookDCID">Webhook ID</h6>
+                <h6 id="webhookDCGuild">Guild ID</h6>
+                <h6 id="webhookDCChannel">Channel ID</h6>
+                <h6 id="webhookDCToken">Token</h6>
+                <h6 id="webhookDCFullURL">Full URL: </h6>
+                <br>
+                <h5>About Webhook Creator</h5>
+                <br>
+                <h6 id="webhookDCUserID">Creator ID:</h6>
+                <h6><img id="webhookDCUser" src=""></img> </h6>
 
         </div>
+        <br>
+        <br>
     </center>
 </body>
 
+<div class="footer">
+    Developed by byeoon <br>
+    <a href="https://github.com/byeoon/WWHook">WWHook is fully open source on GitHub!</a>
+</div>
 </html>
 
 <script>
 
-let debugMode = false;
-let embedMode = false;
-    
+    let debugMode = false;
+    let embedMode = false;
+
     debugModecb.addEventListener("change", () => {
         if (debugModecb.checked) {
             debugMode = true;
@@ -85,20 +114,20 @@ let embedMode = false;
     });
 
     if (deletecb.checked) {
-            document.getElementById("config").style.display = "none";
-            deletebutton.style.visibility = "visible";
-        } else {
-            document.getElementById("config").style.display = "block";
-            deletebutton.style.visibility = "hidden";
-        }
+        document.getElementById("config").style.display = "none";
+        deletebutton.style.visibility = "visible";
+    } else {
+        document.getElementById("config").style.display = "block";
+        deletebutton.style.visibility = "hidden";
+    }
 
-        if (embedmodecb.checked) {
-            document.getElementById("embedconfig").style.display = "block";
-            embedMode = true;
-        } else {
-            document.getElementById("embedconfig").style.display = "none";
-            embedMode = false;
-        }
+    if (embedmodecb.checked) {
+        document.getElementById("embedconfig").style.display = "block";
+        embedMode = true;
+    } else {
+        document.getElementById("embedconfig").style.display = "none";
+        embedMode = false;
+    }
 
 
 
@@ -156,23 +185,21 @@ let embedMode = false;
                 }
             ]
         }
-        
-        if(embedMode == false)
-        {
+
+        if (embedMode == false) {
             request.send(JSON.stringify(params));
         }
-        else
-        {
+        else {
             request.send(JSON.stringify(paramsEmbed));
         }
-        
+
 
         if (debugMode == true) {
-            alert("WebhookURL: " + webhookUrl);
-            alert("Webhook Username: " + webhookUsername);
-            alert("Webhook Text: " + webhookText);
-            alert("Webhook Avatar: " + webhookAvatar);
-            alert("Output: " + JSON.stringify(params));
+            console.log("WebhookURL: " + webhookUrl);
+            console.log("Webhook Username: " + webhookUsername);
+            console.log("Webhook Text: " + webhookText);
+            console.log("Webhook Avatar: " + webhookAvatar);
+            console.log("Full Output: " + JSON.stringify(params));
         }
 
     }
@@ -180,25 +207,41 @@ let embedMode = false;
     function deleteWebhook() {
         var webhookUrl = document.getElementById("url").value;
 
-        fetch(webhookUrl, 
-        {
-            method: "DELETE"
-        }).catch(() => 
-        { 
-            alert("There was an issue deleting the webhook."); 
-        }).then(res => 
-        {
-            if (res) 
+        fetch(webhookUrl,
             {
-                if (res.status === 204) 
-                {
-                    alert("Webhook was successfully deleted.");
+                method: "DELETE"
+            }).catch(() => {
+                alert("There was an issue deleting the webhook.");
+            }).then(res => {
+                if (res) {
+                    if (res.status === 204) {
+                        alert("Webhook was successfully deleted.");
+                    }
+                    else {
+                        alert("There was an issue deleting the webhook. " + res.status.toString());
+                    }
                 }
-                else
-                {
-                    alert("There was an issue deleting the webhook. " + res.status.toString());
-                }
-            }
-        })
+            })
+    }
+
+    function getWebhookInfo() {
+        var webhookUrl = document.getElementById("url").value;
+        document.getElementById("webhook-info").style.display = "block";
+
+        fetch(webhookUrl)
+            .then(response => response.json())
+            .then(response => {
+                document.getElementById("webhookDCName").textContent = "Webhook Preset Username: " + response.name;
+                document.getElementById("webhookDCID").textContent = "Webhook ID: " + response.id;
+                document.getElementById("webhookDCChannel").textContent = "Channel ID: " + response.channel_id;
+                document.getElementById("webhookDCGuild").textContent = "Guild ID: " + response.guild_id;
+                document.getElementById("webhookDCToken").textContent = "Webhook Token: " + response.token;
+                document.getElementById("webhookDCPFP").src = "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar + ".png";
+                document.getElementById("webhookDCFullURL").innerHTML = "Full URL: <a href='" + response.url + "'>Click Me";
+
+                document.getElementById("webhookDCUserID").textContent = "Webhook Creator's ID: " + response.user.id;
+                document.getElementById("webhookDCUser").src = "https://img.discord.dog/" + response.user.id;
+                console.log(response);
+            });
     }
 </script>
