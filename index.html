@@ -38,8 +38,10 @@
         <label for="deletecb">Webhook Deletion Mode <b></b></label>
 
         <br>
+        <br>
         <label for="url">Webhook URL:</label>
         <input type="text" id="url" name="url"><br><br>
+        <div id="config">
 
         <label for="username">Webhook Username:</label>
         <input type="text" id="username" name="username"><br><br>
@@ -51,8 +53,16 @@
         <input type="text" id="webhooktext" name="webhooktext"><br><br>
 
         <button onclick="sendWebhook()" id="sendbutton">Send</button>
+    </div>
         <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
 
+        <div id="embedconfig">
+            <h6>Author Label</h6>
+            <label for="embedauthor">Author Name:</label>
+            <input type="text" id="embedauthor" name="embedauthor"><br><br>
+
+
+        </div>
     </center>
 </body>
 
@@ -72,14 +82,21 @@
 
     deletecb.addEventListener("change", () => {
         if (deletecb.checked) {
-            username.style.visibility = "hidden";
-            webhookavatar.style.visibility = "hidden";
-            webhooktext.style.visibility = "hidden";
-            sendbutton.style.visibility = "hidden";
+            document.getElementById("config").visibility = "hidden";
             deletebutton.style.visibility = "visible";
         } else {
-            // otherText.style.visibility = "hidden";
+            document.getElementById("config").visibility = "visible";
             deletebutton.style.visibility = "hidden";
+        }
+    });
+
+    embedmodecb.addEventListener("change", () => {
+        if (embedmodecb.checked) {
+            document.getElementById("embedconfig").visibility = "visible";
+            embedMode = true;
+        } else {
+            document.getElementById("embedconfig").visibility = "hidden";
+            embedMode = false;
         }
     });
 
@@ -90,6 +107,8 @@
         var webhookText = document.getElementById("webhooktext").value;
         var webhookAvatar = document.getElementById("webhookavatar").value;
 
+        var webhookembedAuthor = document.getElementById("embedauthor").value;
+
         const request = new XMLHttpRequest();
         request.open("POST", webhookUrl);
         request.setRequestHeader('Content-type', 'application/json');
@@ -97,19 +116,33 @@
         const params = {
             content: webhookText,
             username: webhookUsername,
+            avatar_url: webhookAvatar
+        }
+
+        const paramsEmbed = {
+            content: webhookText,
+            username: webhookUsername,
             avatar_url: webhookAvatar,
             embeds: [
                 {
                     "author": {
-                        "name": "byeoon",
-                        "url": "",
+                        "name": webhookembedAuthor,
+                        "url": "https://byeoon.github.io/WWHook",
                         "icon_url": ""
                     }
                 }
             ]
         }
-
-        request.send(JSON.stringify(params));
+        
+        if(embedMode == false)
+        {
+            request.send(JSON.stringify(params));
+        }
+        else
+        {
+            request.send(JSON.stringify(paramsEmbed));
+        }
+        
 
         if (debugMode == true) {
             alert("WebhookURL: " + webhookUrl);
