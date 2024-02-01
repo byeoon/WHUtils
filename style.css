@@ -24,6 +24,22 @@ h1, h5 {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+#riskybutton {
+    background-color: #5a1818;
+    color: #ffd3d3;
+    border: none;
+    padding: 0.5rem 1.20rem;
+    border-radius: 1.05rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+#riskybutton:hover {
+    background-color: #3d1111;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
 .footer {
     position: fixed;
     left: 0;

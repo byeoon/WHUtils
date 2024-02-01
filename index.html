@@ -32,14 +32,18 @@
         <h6>An advanced webhook manager for Discord.</h6>
         <br>
         <input type="checkbox" id="debugModecb" name="debugModecb" />
-        <label for="debugModecb">Print Info to Console</label>
+        <label for="debugModecb">Print Debug Info to Console</label>
         <br>
         <input type="checkbox" id="embedmodecb" name="embedmodecb" />
         <label for="embedmodecb">Send Embedded Message<b>(WIP)</b></label>
         <br>
         <input type="checkbox" id="deletecb" name="deletecb" />
         <label for="deletecb">Webhook Deletion Mode</label>
-
+        <br>
+        <!--
+        <input type="checkbox" id="riskymodecb" name="riskymodecb" />
+        <label for="riskymodecb">Risky Mode (Educational Purposes Only)</label>
+        -->
         <br>
         <br>
         <label for="url">Webhook URL:</label>
@@ -82,6 +86,7 @@
                 <h6 id="webhookDCChannel">Channel ID</h6>
                 <h6 id="webhookDCToken">Token</h6>
                 <h6 id="webhookDCFullURL">Full URL: </h6>
+                <h6 id="webhookDCType">Webhook Type: </h6>
                 <br>
                 <h5>About Webhook Creator</h5>
                 <br>
@@ -238,6 +243,7 @@
                 document.getElementById("webhookDCToken").textContent = "Webhook Token: " + response.token;
                 document.getElementById("webhookDCPFP").src = "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar + ".png";
                 document.getElementById("webhookDCFullURL").innerHTML = "Full URL: <a href='" + response.url + "'>Click Me";
+                document.getElementById("webhookDCType").textContent = "Webhook Type: " + response.type;
 
                 document.getElementById("webhookDCUserID").textContent = "Webhook Creator's ID: " + response.user.id;
                 document.getElementById("webhookDCUser").src = "https://img.discord.dog/" + response.user.id;
