@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WWHook</title>
-    <meta name="description" content="Advanced discord webhook interface.">
+    <meta name="description" content="An advanced webhook manager for Discord.">
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -40,9 +40,9 @@
 
 function sendWebhook()
 {
-    var webhookUrl = document.getElementById("url").textContent;
-    var webhookUsername = document.getElementById("username").textContent;
-    var webhookText = document.getElementById("webhooktext").textContent;
+    var webhookUrl = document.getElementById("url").value;
+    var webhookUsername = document.getElementById("username").value;
+    var webhookText = document.getElementById("webhooktext").value;
     
     const request = new XMLHttpRequest();
       request.open("POST", webhookUrl);
