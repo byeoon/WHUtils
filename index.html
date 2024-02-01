@@ -16,10 +16,15 @@
    <link rel="stylesheet" href="style.css">
 
 </head>
+<body>
 <br>
 
 <h5><center>WWHook 1.0</center></h5>
 <h6><center>An advanced webhook manager for Discord.</center></h6>
+<br>
+<input type="checkbox" id="debugModecb" name="debugModecb" />
+<label for="debugModecb">Enable Debug Mode</label>
+<h6>(Enables alert output on webhook send)</h6>
 <br>
 <center>
         <label for="url">Webhook URL:</label>
@@ -31,12 +36,23 @@
         <label for="webhooktext">Webhook Text:</label>
         <input type="text" id="webhooktext" name="webhooktext"><br><br>
 
-        <input type="submit" value="Submit" onClick="sendWebhook()">
+        <button onclick="sendWebhook()">Send</button>
       
 </center>
+</body>
 </html>
 
 <script>
+let debugMode = false;
+
+debugModecb.addEventListener("change", () => {
+  if (debugModecb.checked) {
+    debugMode = true;
+  } else {
+    debugMode = false;
+  }
+});
+
 
 function sendWebhook()
 {
@@ -56,5 +72,14 @@ function sendWebhook()
       }
 
       request.send(JSON.stringify(params));
+
+      if(debugMode == true)
+      {
+        alert("WebhookURL: " + webhookUrl);
+        alert("Webhook Username: " + webhookUsername);
+        alert("Webhook Text: " + webhookText);
+        alert("Output: " + JSON.stringify(params));
+      }
+      
 }
 </script>
