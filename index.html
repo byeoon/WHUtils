@@ -96,10 +96,10 @@ let embedMode = false;
 
     embedmodecb.addEventListener("change", () => {
         if (embedmodecb.checked) {
-            document.getElementById("embedconfig").style.display = "none";
+            document.getElementById("embedconfig").style.display = "block";
             embedMode = true;
         } else {
-            document.getElementById("embedconfig").style.display = "block";
+            document.getElementById("embedconfig").style.display = "none";
             embedMode = false;
         }
     });
