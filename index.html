@@ -16,12 +16,43 @@
 </head>
 <br>
 
-<h5><center>WWHook</center></h5>
+<h5><center>WWHook 1.0</center></h5>
+<h6><center>An advanced webhook manager for Discord.</center></h6>
 <br>
-<h6><center>test push!</center></h6>
+<center>
+    <form action=sendWebhook()>
+        <label for="url">Webhook URL:</label>
+        <input type="text" id="url" name="url"><br><br>
+        <label for="username">Webhook Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="webhooktext">Webhook Text:</label>
+        <input type="text" id="webhooktext" name="webhooktext"><br><br>
 
+        <input type="submit" value="Submit">
+      </form>
+      
+</center>
 </html>
 
 <script>
 
+function sendWebhook()
+{
+    var webhookUrl = document.getElementById("url").textContent;
+    var webhookUsername = document.getElementById("username").textContent;
+    var webhookText = document.getElementById("webhooktext").textContent;
+    const request = new XMLHttpRequest();
+      request.open("POST", webhookUrl);
+
+      request.setRequestHeader('Content-type', 'application/json');
+
+      const params = {
+        username: webhookUsername,
+        avatar_url: "",
+        content: webhookText
+      }
+
+      request.send(JSON.stringify(params));
+
+}
 </script>
