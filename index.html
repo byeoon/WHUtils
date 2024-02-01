@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WWHook</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <meta name="description" content="An advanced webhook manager for Discord.">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -14,10 +15,7 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet"
-        type="text/css" />
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/discord.js@14.14.1/src/index.min.js"></script>
 
     <script>
 
@@ -28,14 +26,14 @@
 <body>
     <br>
     <center>
-        <h1>WWHook 1.0</h1>
+        <h1>WWHook <img src="logo.png" height="60px" width="60px"></h1>
         <h6>An advanced webhook manager for Discord.</h6>
         <br>
         <input type="checkbox" id="debugModecb" name="debugModecb" />
         <label for="debugModecb">Print Debug Info to Console</label>
         <br>
         <input type="checkbox" id="embedmodecb" name="embedmodecb" />
-        <label for="embedmodecb">Send Embedded Message<b>(WIP)</b></label>
+        <label for="embedmodecb">Send Embedded Message <b>(WIP)</b></label>
         <br>
         <input type="checkbox" id="deletecb" name="deletecb" />
         <label for="deletecb">Webhook Deletion Mode</label>
@@ -62,7 +60,7 @@
             <button onclick="getWebhookInfo()" id="getbutton">Get Webhook Info</button>
 
         </div>
-
+        <br>
         <div id="embedconfig">
             <h5>Author Label</h5>
             <label for="embedauthor">Author Name:</label>
@@ -101,8 +99,9 @@
 
 <div class="footer">
     Developed by byeoon <br>
-    <a href="https://github.com/byeoon/WWHook">WWHook is fully open source on GitHub!</a>
+   Version 1.0 |  <a href="https://github.com/byeoon/WWHook">WWHook is fully open source on GitHub!</a>
 </div>
+
 </html>
 
 <script>
