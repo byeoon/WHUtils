@@ -60,7 +60,7 @@
         <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
 
         <div id="embedconfig">
-            <h6>Author Label</h6>
+            <h5>Author Label</h5>
             <label for="embedauthor">Author Name:</label>
             <input type="text" id="embedauthor" name="embedauthor"><br><br>
 
@@ -83,6 +83,25 @@ let embedMode = false;
             debugMode = false;
         }
     });
+
+    if (deletecb.checked) {
+            document.getElementById("config").style.display = "none";
+            deletebutton.style.visibility = "visible";
+        } else {
+            document.getElementById("config").style.display = "block";
+            deletebutton.style.visibility = "hidden";
+        }
+
+        if (embedmodecb.checked) {
+            document.getElementById("embedconfig").style.display = "block";
+            embedMode = true;
+        } else {
+            document.getElementById("embedconfig").style.display = "none";
+            embedMode = false;
+        }
+
+
+
 
     deletecb.addEventListener("change", () => {
         if (deletecb.checked) {
