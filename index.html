@@ -30,10 +30,10 @@
         <br>
         <input type="checkbox" id="debugModecb" name="debugModecb" />
         <label for="debugModecb">Enable Debug Mode <b>(Enables alert output on webhook send)</b></label>
-
+<br>
         <input type="checkbox" id="embedmodecb" name="embedmodecb" />
-        <label for="embedmodecb">Embed Mode <b>(Does not work yet, wip.)</b></label>
-
+        <label for="embedmodecb">Embed Mode <b>(WIP)</b></label>
+<br>
         <input type="checkbox" id="deletecb" name="deletecb" />
         <label for="deletecb">Webhook Deletion Mode <b></b></label>
 
@@ -61,8 +61,7 @@
 <script>
     let debugMode = false;
     let embedMode = false;
-    let deleteMode = false;
-
+    
     debugModecb.addEventListener("change", () => {
         if (debugModecb.checked) {
             debugMode = true;
@@ -125,7 +124,7 @@
     function deleteWebhook() {
         var webhookUrl = document.getElementById("url").value;
 
-        fetch(webhookUrl.value, 
+        fetch(webhookUrl, 
         {
             method: "DELETE"
         }).catch(() => 
@@ -138,6 +137,10 @@
                 if (res.status === 204) 
                 {
                     alert("Webhook was successfully deleted.");
+                }
+                else
+                {
+                    alert("There was an issue deleting the webhook. " + res.status.toString());
                 }
             }
         })
