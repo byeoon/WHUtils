@@ -6,80 +6,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WWHook</title>
     <meta name="description" content="An advanced webhook manager for Discord.">
-     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet" type="text/css" />
-   <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/discord.js@14.14.1/src/index.min.js"></script>
+
 
 </head>
-<body>
-<br>
 
-<h5><center>WWHook 1.0</center></h5>
-<h6><center>An advanced webhook manager for Discord.</center></h6>
-<br>
-<input type="checkbox" id="debugModecb" name="debugModecb" />
-<label for="debugModecb">Enable Debug Mode</label>
-<h6>(Enables alert output on webhook send)</h6>
-<br>
-<center>
+<body>
+    <br>
+    <center>
+        <h5>WWHook 1.0</h5>
+        <h6>An advanced webhook manager for Discord.</h6>
+        <br>
+        <input type="checkbox" id="debugModecb" name="debugModecb" />
+        <label for="debugModecb">Enable Debug Mode <b>(Enables alert output on webhook send)</b></label>
+
+        <input type="checkbox" id="embedmodecb" name="embedmodecb" />
+        <label for="embedmodecb">Embed Mode <b>(Does not work yet, wip.)</b></label>
+
+        <input type="checkbox" id="deletecb" name="deletecb" />
+        <label for="deletecb">Webhook Deletion Mode <b></b></label>
+
+        <br>
         <label for="url">Webhook URL:</label>
         <input type="text" id="url" name="url"><br><br>
 
         <label for="username">Webhook Username:</label>
         <input type="text" id="username" name="username"><br><br>
 
+        <label for="webhookavatar">Webhook Avatar: (Leave blank to use default)</label>
+        <input type="text" id="webhookavatar" name="webhookavatar"><br><br>
+
         <label for="webhooktext">Webhook Text:</label>
         <input type="text" id="webhooktext" name="webhooktext"><br><br>
 
-        <button onclick="sendWebhook()">Send</button>
-      
-</center>
+        <button onclick="sendWebhook()" id="sendbutton">Send</button>
+        <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
+
+    </center>
 </body>
+
 </html>
 
 <script>
-let debugMode = false;
+    let debugMode = false;
+    let embedMode = false;
+    let deleteMode = false;
 
-debugModecb.addEventListener("change", () => {
-  if (debugModecb.checked) {
-    debugMode = true;
-  } else {
-    debugMode = false;
-  }
-});
+    debugModecb.addEventListener("change", () => {
+        if (debugModecb.checked) {
+            debugMode = true;
+        } else {
+            debugMode = false;
+        }
+    });
+
+    deletecb.addEventListener("change", () => {
+        if (deletecb.checked) {
+            username.style.visibility = "hidden";
+            webhookavatar.style.visibility = "hidden";
+            webhooktext.style.visibility = "hidden";
+            sendbutton.style.visibility = "hidden";
+            deletebutton.style.visibility = "visible";
+        } else {
+            // otherText.style.visibility = "hidden";
+            deletebutton.style.visibility = "hidden";
+        }
+    });
 
 
-function sendWebhook()
-{
-    var webhookUrl = document.getElementById("url").value;
-    var webhookUsername = document.getElementById("username").value;
-    var webhookText = document.getElementById("webhooktext").value;
-    
-    const request = new XMLHttpRequest();
-      request.open("POST", webhookUrl);
+    function sendWebhook() {
+        var webhookUrl = document.getElementById("url").value;
+        var webhookUsername = document.getElementById("username").value;
+        var webhookText = document.getElementById("webhooktext").value;
+        var webhookAvatar = document.getElementById("webhookavatar").value;
 
-      request.setRequestHeader('Content-type', 'application/json');
+        const request = new XMLHttpRequest();
+        request.open("POST", webhookUrl);
+        request.setRequestHeader('Content-type', 'application/json');
 
-      const params = {
-        username: webhookUsername,
-        avatar_url: "",
-        content: webhookText
-      }
+        const params = {
+            content: webhookText,
+            username: webhookUsername,
+            avatar_url: webhookAvatar,
+            embeds: [
+                {
+                    "author": {
+                        "name": "byeoon",
+                        "url": "",
+                        "icon_url": ""
+                    }
+                }
+            ]
+        }
 
-      request.send(JSON.stringify(params));
+        request.send(JSON.stringify(params));
 
-      if(debugMode == true)
-      {
-        alert("WebhookURL: " + webhookUrl);
-        alert("Webhook Username: " + webhookUsername);
-        alert("Webhook Text: " + webhookText);
-        alert("Output: " + JSON.stringify(params));
-      }
-      
-}
+        if (debugMode == true) {
+            alert("WebhookURL: " + webhookUrl);
+            alert("Webhook Username: " + webhookUsername);
+            alert("Webhook Text: " + webhookText);
+            alert("Webhook Avatar: " + webhookAvatar);
+            alert("Output: " + JSON.stringify(params));
+        }
+
+    }
+
+    function deleteWebhook() {
+        var webhookUrl = document.getElementById("url").value;
+
+        fetch(webhookUrl.value, 
+        {
+            method: "DELETE"
+        }).catch(() => 
+        { 
+            alert("There was an issue deleting the webhook."); 
+        }).then(res => 
+        {
+            if (res) 
+            {
+                if (res.status === 204) 
+                {
+                    alert("Webhook was successfully deleted.");
+                }
+            }
+        })
+    }
 </script>
