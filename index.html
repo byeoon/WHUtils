@@ -38,6 +38,9 @@
         <input type="checkbox" id="deletecb" name="deletecb" />
         <label for="deletecb">Webhook Deletion Mode</label>
         <br>
+        <input type="checkbox" id="ttscb" name="ttscb" />
+        <label for="ttscb">Send With TTS</label>
+        <br>
         <!--
         <input type="checkbox" id="riskymodecb" name="riskymodecb" />
         <label for="riskymodecb">Risky Mode (Educational Purposes Only)</label>
@@ -108,6 +111,7 @@
 
     let debugMode = false;
     let embedMode = false;
+    let webhookTTS = false;
 
     debugModecb.addEventListener("change", () => {
         if (debugModecb.checked) {
@@ -156,6 +160,14 @@
         }
     });
 
+        ttscb.addEventListener("change", () => {
+        if (ttscb.checked) {
+            webhookTTS = true;
+        } else {
+            webhookTTS = false;
+        }
+    });
+
 
     function sendWebhook() {
         var webhookUrl = document.getElementById("url").value;
@@ -172,7 +184,8 @@
         const params = {
             content: webhookText,
             username: webhookUsername,
-            avatar_url: webhookAvatar
+            avatar_url: webhookAvatar,
+            tts: webhookTTS
         }
 
         const paramsEmbed = {
@@ -187,7 +200,9 @@
                         "icon_url": ""
                     }
                 }
-            ]
+            ],
+            tts: webhookTTS
+            
         }
 
         if (embedMode == false) {
