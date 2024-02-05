@@ -38,9 +38,6 @@
         <input type="checkbox" id="deletecb" name="deletecb" />
         <label for="deletecb">Webhook Deletion Mode</label>
         <br>
-        <input type="checkbox" id="ttscb" name="ttscb" />
-        <label for="ttscb">Send With TTS</label>
-        <br>
         <!--
         <input type="checkbox" id="riskymodecb" name="riskymodecb" />
         <label for="riskymodecb">Risky Mode (Educational Purposes Only)</label>
@@ -59,6 +56,10 @@
 
             <label for="webhooktext">Webhook Text:</label>
             <input type="text" id="webhooktext" name="webhooktext"><br><br>
+
+        <input type="checkbox" id="ttscb" name="ttscb" />
+        <label for="ttscb">Send With TTS</label>
+            
             <button onclick="sendWebhook()" id="sendbutton">Send</button>
             <button onclick="getWebhookInfo()" id="getbutton">Get Webhook Info</button>
 
