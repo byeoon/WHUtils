@@ -1,5 +1,5 @@
-# WWHook
-An advanced webhook manager for Discord. Visit the website at https://byeoon.github.io/WWHook
+# WHUtils
+An advanced webhook manager for Discord. Visit the website at https://byeoon.github.io/WHUtils
 
 ## Features
 - Send messages through a webhook 
@@ -19,6 +19,6 @@ An advanced webhook manager for Discord. Visit the website at https://byeoon.git
 
 
 ## Suggestions? 
-If you would like to give feedback or request a feature, feel free to report them [here!](https://github.com/byeoon/WWHook/issues/new/choose)
+If you would like to give feedback or request a feature, feel free to report them [here!](https://github.com/byeoon/WHUtils/issues/new/choose)
 
 
