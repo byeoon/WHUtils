@@ -1,5 +1,5 @@
-# WHUtils
-The online webhook manager for Discord. Visit the website at https://byeoon.github.io/WHUtils. This has also been ported as an Enmity plugin, check it out at https://github.com/byeoon/WebhookManager
+# WebhookQuery
+The online webhook manager for Discord. Visit the website at https://byeoon.github.io/WHUtils.
 
 ## Features
 - Send messages through a webhook 
