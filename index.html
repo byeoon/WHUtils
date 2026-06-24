@@ -1,281 +1,737 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>WHUtils</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <meta name="description" content="An advanced webhook manager for Discord.">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta
+      name="description"
+      content="An advanced webhook manager for Discord."
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #1e1f22;
+        color: #dbdee1;
+        font-family: sans-serif;
+      }
+      .discord-bg {
+        background-color: #313338;
+      }
+      .discord-input {
+        background-color: #1e1f22;
+        border: 1px solid #4e5058;
+        color: #f2f3f5;
+      }
+      .discord-input:focus {
+        border-color: #5865f2;
+        outline: none;
+      }
+      .discord-embed-border {
+        background-color: #1e1f22;
+        border-left: 4px solid #208080;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen pb-24">
+    <!-- Header -->
+    <header
+      class="max-w-6xl mx-auto pt-8 px-4 flex items-center justify-between border-b border-[#3f4147] pb-4"
+    >
+      <div>
+        <h1 class="text-3xl font-bold text-white flex items-center gap-3">
+          WHUtils
+          <img
+            src="logo.png"
+            onerror="this.style.display = 'none'"
+            class="h-10 w-10 bg-[#5865f2] rounded p-1"
+          />
+        </h1>
+        <p class="text-sm text-gray-400 mt-1">
+          An advanced webhook manager for Discord.
+        </p>
+      </div>
+      <div class="text-right text-xs text-gray-500">
+        Version 1.3 | Developed by byeoon
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main
+      class="max-w-6xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8"
+    >
+      <!-- Left Column: Controls (7 Cols) -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- Global Toggles -->
+        <div
+          class="discord-bg p-5 rounded shadow-md grid grid-cols-2 gap-4 text-sm"
+        >
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              id="debugModecb"
+              class="rounded bg-zinc-900 border-zinc-700 text-[#5865f2] focus:ring-0"
+            />
+            <span>Console Debug Info</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              id="embedmodecb"
+              class="rounded bg-zinc-900 border-zinc-700 text-[#5865f2] focus:ring-0"
+            />
+            <span>Send Embedded Message</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              id="deletecb"
+              class="rounded bg-zinc-900 border-zinc-700 text-[#da373c] focus:ring-0"
+            />
+            <span class="text-red-400 font-semibold"
+              >Webhook Deletion Mode</span
+            >
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              id="ttscb"
+              class="rounded bg-zinc-900 border-zinc-700 text-[#5865f2] focus:ring-0"
+            />
+            <span>Send With TTS</span>
+          </label>
+        </div>
+
+        <!-- Target URL Config -->
+        <div class="discord-bg p-5 rounded shadow-md space-y-4">
+          <div>
+            <label
+              for="url"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2"
+              >Webhook URL</label
+            >
+            <input
+              type="text"
+              id="url"
+              class="w-full p-2.5 rounded discord-input text-sm"
+            />
+          </div>
+        </div>
+
+        <!-- Standard Configuration Context -->
+        <div id="config" class="discord-bg p-5 rounded shadow-md space-y-4">
+          <h3 class="text-white font-bold border-b border-zinc-700 pb-2 mb-2">
+            Message Configuration
+          </h3>
+          <div>
+            <label
+              for="username"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+              >Webhook Username</label
+            >
+            <input
+              type="text"
+              id="username"
+              placeholder="Spidey Bot"
+              class="w-full p-2.5 rounded discord-input text-sm"
+            />
+          </div>
+          <div>
+            <label
+              for="webhookavatar"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+              >Webhook Avatar URL</label
+            >
+            <input
+              type="text"
+              id="webhookavatar"
+              placeholder="Leave blank for default"
+              class="w-full p-2.5 rounded discord-input text-sm"
+            />
+          </div>
+          <div>
+            <label
+              for="webhooktext"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+              >Webhook Text Content</label
+            >
+            <textarea
+              id="webhooktext"
+              rows="3"
+              placeholder="Hello World!"
+              class="w-full p-2.5 rounded discord-input text-sm resize-none"
+            ></textarea>
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button
+              onclick="sendWebhook()"
+              id="sendbutton"
+              class="flex-1 bg-[#248046] hover:bg-[#1a6535] text-white font-medium py-2 px-4 rounded transition text-sm shadow"
+            >
+              Send Payload
+            </button>
+            <button
+              onclick="getWebhookInfo()"
+              id="getbutton"
+              class="bg-[#4e5058] hover:bg-[#6d6f78] text-white font-medium py-2 px-4 rounded transition text-sm"
+            >
+              Get Info
+            </button>
+          </div>
+        </div>
+
+        <!-- Embed Configuration Box -->
+        <div
+          id="embedconfig"
+          class="discord-bg p-5 rounded shadow-md space-y-4 hidden"
+        >
+          <h3
+            class="text-yellow-500 font-bold border-b border-zinc-700 pb-2 mb-2 flex items-center gap-2"
+          >
+            Embed Builder
+            <span
+              class="text-xs bg-yellow-500/20 text-yellow-500 px-1.5 py-0.5 rounded uppercase"
+              >WIP</span
+            >
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="embedauthor"
+                class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+                >Author Name</label
+              >
+              <input
+                type="text"
+                id="embedauthor"
+                class="w-full p-2.5 rounded discord-input text-sm"
+              />
+            </div>
+            <div>
+              <label
+                for="webhookavatarEmbed"
+                class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+                >Author Icon URL</label
+              >
+              <input
+                type="text"
+                id="webhookavatarEmbed"
+                class="w-full p-2.5 rounded discord-input text-sm"
+              />
+            </div>
+          </div>
+          <hr class="border-zinc-700 my-2" />
+          <div>
+            <label
+              for="webhookTitleEmbed"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+              >Embed Title</label
+            >
+            <input
+              type="text"
+              id="webhookTitleEmbed"
+              class="w-full p-2.5 rounded discord-input text-sm"
+            />
+          </div>
+          <div>
+            <label
+              for="webhookTitleLink"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+              >Title Link URL</label
+            >
+            <input
+              type="text"
+              id="webhookTitleLink"
+              class="w-full p-2.5 rounded discord-input text-sm"
+            />
+          </div>
+          <div>
+            <label
+              for="webhookTitleDescription"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1"
+              >Description Content</label
+            >
+            <textarea
+              id="webhookTitleDescription"
+              rows="3"
+              class="w-full p-2.5 rounded discord-input text-sm resize-none"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Delete Mode Action Button -->
+        <button
+          onclick="deleteWebhook()"
+          id="deletebutton"
+          class="w-full bg-[#da373c] hover:bg-[#a92b2f] text-white font-bold py-3 px-4 rounded transition text-sm hidden shadow-lg"
+        >
+          Permanently Delete Webhook Target
+        </button>
+
+        <!-- Webhook Info Response Area -->
+        <div
+          id="webhook-info"
+          class="discord-bg p-5 rounded shadow-md space-y-4 border border-[#248046] hidden animate-fadeIn"
+        >
+          <h3
+            class="text-white font-bold text-lg border-b border-zinc-700 pb-2"
+          >
+            Fetched Webhook Architecture
+          </h3>
+          <div class="flex items-center gap-4 bg-[#1e1f22] p-3 rounded">
+            <img
+              id="webhookDCPFP"
+              class="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 object-cover"
+              src=""
+            />
+            <div>
+              <h4
+                id="webhookDCName"
+                class="text-white font-bold text-base"
+              ></h4>
+              <p id="webhookDCType" class="text-xs text-gray-400 mt-0.5"></p>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono bg-[#1e1f22] p-4 rounded text-gray-300 break-all space-y-1 md:space-y-0"
+          >
+            <div>
+              <span
+                class="text-gray-500 block uppercase font-sans tracking-wider text-[10px]"
+                >Webhook ID</span
+              >
+              <span id="webhookDCID"></span>
+            </div>
+            <div>
+              <span
+                class="text-gray-500 block uppercase font-sans tracking-wider text-[10px]"
+                >Guild ID</span
+              >
+              <span id="webhookDCGuild"></span>
+            </div>
+            <div>
+              <span
+                class="text-gray-500 block uppercase font-sans tracking-wider text-[10px]"
+                >Channel ID</span
+              >
+              <span id="webhookDCChannel"></span>
+            </div>
+            <div>
+              <span
+                class="text-gray-500 block uppercase font-sans tracking-wider text-[10px]"
+                >Token Reference</span
+              >
+              <span id="webhookDCToken" class="text-yellow-600"></span>
+            </div>
+          </div>
+          <div
+            id="webhookDCFullURL"
+            class="text-xs font-semibold text-[#5865f2] hover:underline"
+          ></div>
+
+          <h4 class="text-white font-semibold text-sm pt-2">
+            Registered Origin Creator
+          </h4>
+          <div class="flex items-center gap-3 bg-[#1e1f22] p-3 rounded">
+            <img
+              id="webhookDCUser"
+              class="w-10 h-10 rounded-full bg-zinc-800 object-cover"
+              src=""
+            />
+            <span
+              id="webhookDCUserID"
+              class="text-xs font-mono text-gray-300"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Sandbox Preview (5 Cols) -->
+      <div class="lg:col-span-5">
+        <div class="sticky top-6">
+          <span
+            class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2"
+            >Live Client Preview Layout</span
+          >
+          <div
+            class="discord-bg p-4 rounded shadow-lg border border-zinc-800 flex items-start gap-4"
+          >
+            <img
+              id="prevAvatar"
+              src="https://cdn.discordapp.com/embed/avatars/0.png"
+              class="w-10 h-10 rounded-full object-cover mt-0.5 flex-shrink-0 bg-zinc-700"
+            />
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span
+                  id="prevUsername"
+                  class="font-medium text-white text-sm hover:underline cursor-pointer"
+                  >Webhook</span
+                >
+                <span
+                  class="bg-[#5865f2] text-white font-bold rounded px-1 text-[10px] uppercase tracking-wide py-0.2"
+                  >Bot</span
+                >
+                <span class="text-xs text-gray-400">Today at 10:17 PM</span>
+              </div>
+              <div
+                id="prevContent"
+                class="text-sm mt-1 text-[#dbdee1] whitespace-pre-wrap break-words"
+              ></div>
+
+              <!-- Embed Layout Container inside preview -->
+              <div
+                id="prevEmbed"
+                class="discord-embed-border p-3 rounded mt-2 max-w-[520px] hidden animate-fadeIn"
+              >
+                <div
+                  class="flex items-center gap-2 mb-1.5"
+                  id="prevEmbedAuthorContainer"
+                >
+                  <img
+                    id="prevEmbedAuthorIcon"
+                    class="w-5 h-5 rounded-full hidden"
+                    src=""
+                  />
+                  <span
+                    id="prevEmbedAuthorName"
+                    class="text-xs font-semibold text-white"
+                  ></span>
+                </div>
+                <a
+                  id="prevEmbedTitle"
+                  href="#"
+                  target="_blank"
+                  class="block font-bold text-sm text-[#00a8fc] hover:underline mb-1"
+                ></a>
+                <div
+                  id="prevEmbedDesc"
+                  class="text-xs text-[#dbdee1] whitespace-pre-wrap break-words"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Toast Notification Stack Container -->
+    <div
+      id="toast-container"
+      class="fixed bottom-16 right-4 z-50 flex flex-col gap-2 pointer-events-none"
+    ></div>
+    <!-- Footer sticky context -->
+    <footer
+      class="fixed bottom-0 left-0 right-0 bg-[#111214] border-t border-zinc-800 py-3 text-center text-xs text-gray-400 z-50"
+    >
+      <a
+        href="https://github.com/byeoon/WHUtils"
+        target="_blank"
+        class="text-[#5865f2] font-semibold hover:underline"
+        >WHUtils is fully open source!</a
+      >
+    </footer>
 
     <script>
+      let debugMode = false;
+      let embedMode = false;
+      let webhookTTS = false;
 
-    </script>
+      // UI Event Listeners
+      const debugModecb = document.getElementById("debugModecb");
+      const embedmodecb = document.getElementById("embedmodecb");
+      const deletecb = document.getElementById("deletecb");
+      const ttscb = document.getElementById("ttscb");
 
-</head>
+      const configDiv = document.getElementById("config");
+      const embedConfigDiv = document.getElementById("embedconfig");
+      const deleteButton = document.getElementById("deletebutton");
 
-<body>
-    <br>
-    <center>
-        <h1>WHUtils <img src="logo.png" height="60px" width="60px"></h1>
-        <h6>An advanced webhook manager for Discord.</h6>
-        <br>
-        <input type="checkbox" id="debugModecb" name="debugModecb" />
-        <label for="debugModecb">Print Debug Info to Console</label>
-        <br>
-        <input type="checkbox" id="embedmodecb" name="embedmodecb" />
-        <label for="embedmodecb">Send Embedded Message <b>(WIP)</b></label>
-        <br>
-        <input type="checkbox" id="deletecb" name="deletecb" />
-        <label for="deletecb">Webhook Deletion Mode</label>
-        <br>
-        <input type="checkbox" id="ttscb" name="ttscb" />
-        <label for="ttscb">Send With TTS</label>
-        <br>
-        <br>
-        <label for="url">Webhook URL:</label>
-        <input type="text" id="url" name="url"><br><br>
-        <div id="config">
+      // Live Preview Bindings
+      const inputUsername = document.getElementById("username");
+      const inputAvatar = document.getElementById("webhookavatar");
+      const inputContent = document.getElementById("webhooktext");
 
-            <label for="username">Webhook Username:</label>
-            <input type="text" id="username" name="username"><br><br>
+      const inputEmbedAuthor = document.getElementById("embedauthor");
+      const inputEmbedAuthorIcon =
+        document.getElementById("webhookavatarEmbed");
+      const inputEmbedTitle = document.getElementById("webhookTitleEmbed");
+      const inputEmbedLink = document.getElementById("webhookTitleLink");
+      const inputEmbedDesc = document.getElementById("webhookTitleDescription");
 
-            <label for="webhookavatar">Webhook Avatar: (Leave blank to use default)</label>
-            <input type="text" id="webhookavatar" name="webhookavatar"><br><br>
+      const prevUsername = document.getElementById("prevUsername");
+      const prevAvatar = document.getElementById("prevAvatar");
+      const prevContent = document.getElementById("prevContent");
+      const prevEmbed = document.getElementById("prevEmbed");
+      const prevEmbedAuthorContainer = document.getElementById(
+        "prevEmbedAuthorContainer",
+      );
+      const prevEmbedAuthorName = document.getElementById(
+        "prevEmbedAuthorName",
+      );
+      const prevEmbedAuthorIcon = document.getElementById(
+        "prevEmbedAuthorIcon",
+      );
+      const prevEmbedTitle = document.getElementById("prevEmbedTitle");
+      const prevEmbedDesc = document.getElementById("prevEmbedDesc");
 
-            <label for="webhooktext">Webhook Text:</label>
-            <input type="text" id="webhooktext" name="webhooktext"><br><br>
-            
-            <button onclick="sendWebhook()" id="sendbutton">Send</button>
-            <button onclick="getWebhookInfo()" id="getbutton">Get Webhook Info</button>
+      // Real-time Engine Updates
+      function updateLivePreview() {
+        prevUsername.textContent = inputUsername.value.trim() || "Webhook";
+        prevAvatar.src =
+          inputAvatar.value.trim() ||
+          "https://cdn.discordapp.com/embed/avatars/0.png";
+        prevContent.textContent = inputContent.value;
 
-        </div>
-        <br>
-        <div id="embedconfig">
-            <h5>Author Label</h5>
-            <label for="embedauthor">Author Name:</label>
-            <input type="text" id="embedauthor" name="embedauthor"><br><br>
+        if (embedMode) {
+          let displayEmbed = false;
 
-            <label for="webhookavatarEmbed">Author Icon: (Blank for none)</label>
-            <input type="text" id="webhookavatarEmbed" name="webhookavatarEmbed"><br><br>
-            <br>
-            <h5>Embed Title </h5>
-            <br>
-            <label for="webhookTitleEmbed">Title:</label>
-            <input type="text" id="webhookTitleEmbed" name="webhookTitleEmbed"><br><br>
+          if (inputEmbedAuthor.value.trim()) {
+            prevEmbedAuthorName.textContent = inputEmbedAuthor.value;
+            if (inputEmbedAuthorIcon.value.trim()) {
+              prevEmbedAuthorIcon.src = inputEmbedAuthorIcon.value.trim();
+              prevEmbedAuthorIcon.classList.remove("hidden");
+            } else {
+              prevEmbedAuthorIcon.classList.add("hidden");
+            }
+            prevEmbedAuthorContainer.classList.remove("hidden");
+            displayEmbed = true;
+          } else {
+            prevEmbedAuthorContainer.classList.add("hidden");
+          }
 
-            <label for="webhookTitleLink">Title Link: (Blank for none)</label>
-            <input type="text" id="webhookTitleLink" name="webhookTitleLink"><br><br>
+          if (inputEmbedTitle.value.trim()) {
+            prevEmbedTitle.textContent = inputEmbedTitle.value;
+            prevEmbedTitle.href = inputEmbedLink.value.trim() || "#";
+            prevEmbedTitle.classList.remove("hidden");
+            displayEmbed = true;
+          } else {
+            prevEmbedTitle.classList.add("hidden");
+          }
 
-            <label for="webhookTitleDescription">Title Description:</label>
-            <input type="text" id="webhookTitleDescription" name="webhookTitleDescription"><br><br>
-        </div>
-        
+          if (inputEmbedDesc.value.trim()) {
+            prevEmbedDesc.textContent = inputEmbedDesc.value;
+            prevEmbedDesc.classList.remove("hidden");
+            displayEmbed = true;
+          } else {
+            prevEmbedDesc.classList.add("hidden");
+          }
 
-        <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
-        <br>
-
-
-        <br>
-        <div id="webhook-info" style="display: none;">
-            <h5>About This Webhook</h6>
-                <br>
-                <h6>Webhook Profile Picture: <img id="webhookDCPFP"></img> </h6>
-                <h6 id="webhookDCName">Current Username:</h6>
-                <h6 id="webhookDCID">Webhook ID</h6>
-                <h6 id="webhookDCGuild">Guild ID</h6>
-                <h6 id="webhookDCChannel">Channel ID</h6>
-                <h6 id="webhookDCToken">Token</h6>
-                <h6 id="webhookDCFullURL">Full URL: </h6>
-                <h6 id="webhookDCType">Webhook Type: </h6>
-                <br>
-                <h5>About Webhook Creator</h5>
-                <br>
-                <h6 id="webhookDCUserID">Creator ID:</h6>
-                <h6><img id="webhookDCUser" src=""></img> </h6>
-
-        </div>
-        <br>
-        <br>
-    </center>
-</body>
-
-<div class="footer">
-    Developed by byeoon <br>
-   Version 1.2 |  <a href="https://github.com/byeoon/WHUtils">WHUtils is fully open source!</a> <br>
-</div>
-
-</html>
-
-<script>
-
-    let debugMode = false;
-    let embedMode = false;
-    let webhookTTS = false;
-
-    debugModecb.addEventListener("change", () => {
-        if (debugModecb.checked) {
-            debugMode = true;
+          if (displayEmbed) {
+            prevEmbed.classList.remove("hidden");
+          } else {
+            prevEmbed.classList.add("hidden");
+          }
         } else {
-            debugMode = false;
+          prevEmbed.classList.add("hidden");
         }
-    });
+      }
 
-    if (deletecb.checked) {
-        document.getElementById("config").style.display = "none";
-        deletebutton.style.visibility = "visible";
-    } else {
-        document.getElementById("config").style.display = "block";
-        deletebutton.style.visibility = "hidden";
-    }
+      // Live Preview Listeners
+      [
+        inputUsername,
+        inputAvatar,
+        inputContent,
+        inputEmbedAuthor,
+        inputEmbedAuthorIcon,
+        inputEmbedTitle,
+        inputEmbedLink,
+        inputEmbedDesc,
+      ].forEach((el) => {
+        el.addEventListener("input", updateLivePreview);
+      });
 
-    if (embedmodecb.checked) {
-        document.getElementById("embedconfig").style.display = "block";
-        embedMode = true;
-    } else {
-        document.getElementById("embedconfig").style.display = "none";
-        embedMode = false;
-    }
+      debugModecb.addEventListener("change", () => {
+        debugMode = debugModecb.checked;
+      });
+      ttscb.addEventListener("change", () => {
+        webhookTTS = ttscb.checked;
+      });
 
-
-
-
-    deletecb.addEventListener("change", () => {
+      deletecb.addEventListener("change", () => {
         if (deletecb.checked) {
-            document.getElementById("config").style.display = "none";
-            deletebutton.style.visibility = "visible";
+          configDiv.classList.add("hidden");
+          embedConfigDiv.classList.add("hidden");
+          deleteButton.classList.remove("hidden");
         } else {
-            document.getElementById("config").style.display = "block";
-            deletebutton.style.visibility = "hidden";
+          configDiv.classList.remove("hidden");
+          deleteButton.classList.add("hidden");
+          if (embedMode) embedConfigDiv.classList.remove("hidden");
         }
-    });
+      });
 
-    embedmodecb.addEventListener("change", () => {
-        if (embedmodecb.checked) {
-            document.getElementById("embedconfig").style.display = "block";
-            embedMode = true;
+      embedmodecb.addEventListener("change", () => {
+        embedMode = embedmodecb.checked;
+        if (embedMode && !deletecb.checked) {
+          embedConfigDiv.classList.remove("hidden");
         } else {
-            document.getElementById("embedconfig").style.display = "none";
-            embedMode = false;
+          embedConfigDiv.classList.add("hidden");
         }
-    });
+        updateLivePreview();
+      });
 
-        ttscb.addEventListener("change", () => {
-        if (ttscb.checked) {
-            webhookTTS = true;
-        } else {
-            webhookTTS = false;
-        }
-    });
-
-
-    function sendWebhook() {
-        var webhookUrl = document.getElementById("url").value;
-        var webhookUsername = document.getElementById("username").value;
-        var webhookText = document.getElementById("webhooktext").value;
-        var webhookAvatar = document.getElementById("webhookavatar").value;
-
-        var webhookembedAuthor = document.getElementById("embedauthor").value;
-        var webhookavatarEmbed = document.getElementById("webhookavatarEmbed").value;
-
-        var webhookTitleEmbed = document.getElementById("webhookTitleEmbed").value;
-        var webhookTitleLink = document.getElementById("webhookTitleLink").value;
-        var webhookTitleDescription = document.getElementById("webhookTitleDescription").value;
-
-
-
-        const request = new XMLHttpRequest();
-        request.open("POST", webhookUrl);
-        request.setRequestHeader('Content-type', 'application/json');
+      // Refactored API Actions
+      async function sendWebhook() {
+        const webhookUrl = document.getElementById("url").value;
+        if (!webhookUrl) return showNotification("Please specify a valid Webhook URL.", "error");
 
         const params = {
-            content: webhookText,
-            username: webhookUsername,
-            avatar_url: webhookAvatar,
-            tts: webhookTTS
-        }
+          content: inputContent.value,
+          username: inputUsername.value || undefined,
+          avatar_url: inputAvatar.value || undefined,
+          tts: webhookTTS,
+        };
 
-        const paramsEmbed = {
-            content: webhookText,
-            username: webhookUsername,
-            avatar_url: webhookAvatar,
-            embeds: [
-                {
-                    "author": {
-                        "name": webhookembedAuthor,
-                        "url": "https://byeoon.github.io/WHUtils",
-                        "icon_url": webhookavatarEmbed
-                    },
-                    "title": webhookTitleEmbed,
-                    "url": webhookTitleLink,
-                    "description": webhookTitleDescription
-                }
-            ],
-            tts: webhookTTS
-            
-        }
-
-        if (embedMode == false) {
-            request.send(JSON.stringify(params));
-        }
-        else {
-            request.send(JSON.stringify(paramsEmbed));
-        }
-
-
-        if (debugMode == true) {
-            console.log("WebhookURL: " + webhookUrl);
-            console.log("Webhook Username: " + webhookUsername);
-            console.log("Webhook Text: " + webhookText);
-            console.log("Webhook Avatar: " + webhookAvatar);
-            console.log("Full Output: " + JSON.stringify(params));
-        }
-
-    }
-
-    function deleteWebhook() {
-        var webhookUrl = document.getElementById("url").value;
-
-        fetch(webhookUrl,
+        if (embedMode) {
+          params.embeds = [
             {
-                method: "DELETE"
-            }).catch(() => {
-                alert("There was an issue deleting the webhook.");
-            }).then(res => {
-                if (res) {
-                    if (res.status === 204) {
-                        alert("Webhook was successfully deleted.");
-                    }
-                    else {
-                        alert("There was an issue deleting the webhook. " + res.status.toString());
-                    }
-                }
-            })
-    }
+              author: inputEmbedAuthor.value
+                ? {
+                    name: inputEmbedAuthor.value,
+                    url: "https://byeoon.github.io/WHUtils",
+                    icon_url: inputEmbedAuthorIcon.value || undefined,
+                  }
+                : undefined,
+              title: inputEmbedTitle.value || undefined,
+              url: inputEmbedLink.value || undefined,
+              description: inputEmbedDesc.value || undefined,
+            },
+          ];
+        }
 
-    function getWebhookInfo() {
-        var webhookUrl = document.getElementById("url").value;
-        document.getElementById("webhook-info").style.display = "block";
+        if (debugMode)
+          console.log("Payload Architecture:", JSON.stringify(params, null, 2));
 
-        fetch(webhookUrl)
-            .then(response => response.json())
-            .then(response => {
-                document.getElementById("webhookDCName").textContent = "Webhook Preset Username: " + response.name;
-                document.getElementById("webhookDCID").textContent = "Webhook ID: " + response.id;
-                document.getElementById("webhookDCChannel").textContent = "Channel ID: " + response.channel_id;
-                document.getElementById("webhookDCGuild").textContent = "Guild ID: " + response.guild_id;
-                document.getElementById("webhookDCToken").textContent = "Webhook Token: " + response.token;
-                document.getElementById("webhookDCPFP").src = "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar + ".png";
-                document.getElementById("webhookDCFullURL").innerHTML = "Full URL: <a href='" + response.url + "'>Click Me";
-                document.getElementById("webhookDCType").textContent = "Webhook Type: " + response.type;
+        try {
+          const response = await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(params),
+          });
+          if (!response.ok)
+            throw new Error(`HTTP Status Code: ${response.status}`);
+          showNotification("Payload dispatched successfully!", "success");
+        } catch (err) {
+          showNotification("Failed to dispatch payload: " + err.message, "error");
+        }
+      }
 
-                document.getElementById("webhookDCUserID").textContent = "Webhook Creator's ID: " + response.user.id;
-                document.getElementById("webhookDCUser").src = "https://img.discord.dog/" + response.user.id;
-                console.log(response);
-            });
-    }
-</script>
+      async function deleteWebhook() {
+        const webhookUrl = document.getElementById("url").value;
+        if (!webhookUrl) return alert("Missing Webhook Endpoint String.");
+
+        if (
+          !confirm(
+            "Are you entirely sure you want to completely erase this webhook endpoint from Discord?",
+          )
+        )
+          return;
+
+        try {
+          const res = await fetch(webhookUrl, { method: "DELETE" });
+          if (res.status === 204) {
+            showNotification("Webhook successfully destroyed.", "success");
+          } else {
+            showNotification("Issue during destruction loop context: " + res.status, "error");
+          }
+        } catch (e) {
+          showNotification("Failed to delete webhook: Status " + res.status, "error");
+        }
+      }
+
+      async function getWebhookInfo() {
+        const webhookUrl = document.getElementById("url").value;
+        if (!webhookUrl)
+          showNotification("Please enter a webhook target URL first.", "error");
+
+        try {
+          const response = await fetch(webhookUrl);
+          if (!response.ok)
+            throw new Error("Invalid endpoint token structure return.");
+          const data = await response.json();
+
+          document.getElementById("webhook-info").classList.remove("hidden");
+          document.getElementById("webhookDCName").textContent =
+            data.name || "Default Preset Context";
+          document.getElementById("webhookDCID").textContent = data.id;
+          document.getElementById("webhookDCChannel").textContent =
+            data.channel_id;
+          document.getElementById("webhookDCGuild").textContent =
+            data.guild_id || "DM/Isolated Context";
+          document.getElementById("webhookDCToken").textContent = data.token;
+          document.getElementById("webhookDCPFP").src = data.avatar
+            ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
+            : "https://cdn.discordapp.com/embed/avatars/0.png";
+          document.getElementById("webhookDCFullURL").innerHTML =
+            `<a href="${data.url}" target="_blank" class="hover:underline">Open Raw Endpoint JSON Configuration Link &rarr;</a>`;
+          document.getElementById("webhookDCType").textContent =
+            `Type Context Indicator Reference: ${data.type === 1 ? "Incoming Webhook" : "Application Webhook"}`;
+
+          if (data.user) {
+            document.getElementById("webhookDCUserID").textContent =
+              `ID: ${data.user.id} (${data.user.username})`;
+            document.getElementById("webhookDCUser").src =
+              `https://cdn.discordapp.com/embed/avatars/${data.user.discriminator % 5}.png`;
+          }
+          if (debugMode)
+            console.log("Fetched structure context array map: ", data);
+        } catch (err) {
+          showNotification("Failed to fetch webhook info.", "error")
+        }
+      }
+
+      function showNotification(message, type = "success") {
+        const container = document.getElementById("toast-container");
+
+        // Create toast element
+        const toast = document.createElement("div");
+        toast.className = `pointer-events-auto min-w-[280px] max-w-sm p-4 rounded shadow-xl border text-sm font-medium flex items-center justify-between transform translate-x-full opacity-0 transition-all duration-300 ease-out`;
+
+        // Theme styling based on type
+        if (type === "success") {
+          toast.classList.add(
+            "bg-[#232428]",
+            "border-[#248046]",
+            "text-[#248046]",
+          );
+        } else if (type === "error") {
+          toast.classList.add(
+            "bg-[#232428]",
+            "border-[#da373c]",
+            "text-[#da373c]",
+          );
+        } else {
+          toast.classList.add(
+            "bg-[#232428]",
+            "border-[#4e5058]",
+            "text-gray-300",
+          );
+        }
+
+        // Insert message content
+        toast.textContent = message;
+
+        // Append to stack
+        container.appendChild(toast);
+
+        // Trigger slide-in animation
+        setTimeout(() => {
+          toast.classList.remove("translate-x-full", "opacity-0");
+        }, 10);
+
+        // Auto-dismiss execution routine after 4 seconds
+        setTimeout(() => {
+          toast.classList.add("translate-x-full", "opacity-0");
+          // Wait for slide-out animation to finish before removing from DOM
+          toast.addEventListener("transitionend", () => {
+            toast.remove();
+          });
+        }, 4000);
+      }
+    </script>
+  </body>
+</html>
