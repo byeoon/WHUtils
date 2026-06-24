@@ -2,17 +2,10 @@
 <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>WHUtils</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta
-      name="description"
-      content="An advanced webhook manager for Discord."
-    />
-    <!-- Tailwind CSS -->
+    <meta name="description" content="An advanced webhook manager for Discord."/>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
@@ -39,45 +32,22 @@
     </style>
   </head>
   <body class="min-h-screen pb-24">
-    <!-- Header -->
-    <header
-      class="max-w-6xl mx-auto pt-8 px-4 flex items-center justify-between border-b border-[#3f4147] pb-4"
-    >
+    <header class="max-w-6xl mx-auto pt-8 px-4 flex items-center justify-between border-b border-[#3f4147] pb-4">
       <div>
-        <h1 class="text-3xl font-bold text-white flex items-center gap-3">
-          WHUtils
-          <img
-            src="logo.png"
-            onerror="this.style.display = 'none'"
-            class="h-10 w-10 bg-[#5865f2] rounded p-1"
-          />
+        <h1 class="text-3xl font-bold text-white flex items-center gap-3">WHUtils
+          <img src="logo.png" class="h-10 w-10 bg-[#5865f2] rounded p-1" />
         </h1>
-        <p class="text-sm text-gray-400 mt-1">
-          An advanced webhook manager for Discord.
-        </p>
+        <p class="text-sm text-gray-400 mt-1"> An advanced webhook manager for Discord. </p>
       </div>
-      <div class="text-right text-xs text-gray-500">
-        Version 1.3 | Developed by byeoon
-      </div>
+      <div class="text-right text-xs text-gray-500"> Version 1.3 </div>
     </header>
 
-    <!-- Main Workspace -->
-    <main
-      class="max-w-6xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8"
-    >
-      <!-- Left Column: Controls (7 Cols) -->
+    <main class="max-w-6xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
       <div class="lg:col-span-7 space-y-6">
-        <!-- Global Toggles -->
-        <div
-          class="discord-bg p-5 rounded shadow-md grid grid-cols-2 gap-4 text-sm"
-        >
+        <div class="discord-bg p-5 rounded shadow-md grid grid-cols-2 gap-4 text-sm">
           <label class="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              id="debugModecb"
-              class="rounded bg-zinc-900 border-zinc-700 text-[#5865f2] focus:ring-0"
-            />
-            <span>Console Debug Info</span>
+            <input type="checkbox" id="debugModecb" class="rounded bg-zinc-900 border-zinc-700 text-[#5865f2] focus:ring-0" />
+            <span>Print Debug Info in Console</span>
           </label>
           <label class="flex items-center gap-3 cursor-pointer">
             <input
@@ -85,7 +55,7 @@
               id="embedmodecb"
               class="rounded bg-zinc-900 border-zinc-700 text-[#5865f2] focus:ring-0"
             />
-            <span>Send Embedded Message</span>
+            <span>Add Embed</span>
           </label>
           <label class="flex items-center gap-3 cursor-pointer">
             <input
@@ -107,7 +77,6 @@
           </label>
         </div>
 
-        <!-- Target URL Config -->
         <div class="discord-bg p-5 rounded shadow-md space-y-4">
           <div>
             <label
