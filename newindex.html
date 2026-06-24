@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>WHUtils</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="description" content="An advanced webhook manager for Discord.">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1><b>WHUtils</b></h1>
+        <h6>An advanced webhook manager for Discord on web.</h6>
+    </div>
+
+    <div id="centerscreen">
+        <h1>Input Discord Webhook URL:</h1>
+        <input type="text" id="url" placeholder="https://discord.com/api/webhooks/...">
+    </div>
+
+    <div class="main" id="main">
+        <H1>pee pee ball</H1>
+    </div>
+</body>
+
+
+</html>
+
+<script>
+const urlInput = document.getElementById('url');
+const centerprompt = document.getElementById('centerscreen');
+const mainDisplay = document.getElementById('main');
+
+urlInput.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    centerprompt.style.display = 'none';
+    mainDisplay.classList().add('active');
+  }
+});
+</script>

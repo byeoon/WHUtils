@@ -7,106 +7,114 @@
     <title>WHUtils</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <meta name="description" content="An advanced webhook manager for Discord.">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-
-    <script>
-
-    </script>
-
 </head>
 
 <body>
-    <br>
-    <center>
-        <h1>WHUtils <img src="logo.png" height="60px" width="60px"></h1>
-        <h6>An advanced webhook manager for Discord.</h6>
-        <br>
+    <div class="header">
+        <h1><b>WHUtils</b></h1>
+        <h6>An advanced webhook manager for Discord on web.</h6>
+    </div>
+
+    <div id="centerscreen">
+        <h1>Input URL to manage:</h1>
+        <input type="text" id="url" name="url">
+    </div>
+
+    <div class="container">
         <input type="checkbox" id="debugModecb" name="debugModecb" />
         <label for="debugModecb">Print Debug Info to Console</label>
-        <br>
+
+
         <input type="checkbox" id="embedmodecb" name="embedmodecb" />
         <label for="embedmodecb">Send Embedded Message <b>(WIP)</b></label>
-        <br>
+
         <input type="checkbox" id="deletecb" name="deletecb" />
         <label for="deletecb">Webhook Deletion Mode</label>
-        <br>
+
         <input type="checkbox" id="ttscb" name="ttscb" />
         <label for="ttscb">Send With TTS</label>
-        <br>
-        <br>
-        <label for="url">Webhook URL:</label>
-        <input type="text" id="url" name="url"><br><br>
-        <div id="config">
 
-            <label for="username">Webhook Username:</label>
-            <input type="text" id="username" name="username"><br><br>
-
-            <label for="webhookavatar">Webhook Avatar: (Leave blank to use default)</label>
-            <input type="text" id="webhookavatar" name="webhookavatar"><br><br>
-
-            <label for="webhooktext">Webhook Text:</label>
-            <input type="text" id="webhooktext" name="webhooktext"><br><br>
-            
-            <button onclick="sendWebhook()" id="sendbutton">Send</button>
-            <button onclick="getWebhookInfo()" id="getbutton">Get Webhook Info</button>
-
-        </div>
-        <br>
-        <div id="embedconfig">
-            <h5>Author Label</h5>
-            <label for="embedauthor">Author Name:</label>
-            <input type="text" id="embedauthor" name="embedauthor"><br><br>
-
-            <label for="webhookavatarEmbed">Author Icon: (Blank for none)</label>
-            <input type="text" id="webhookavatarEmbed" name="webhookavatarEmbed"><br><br>
-            <br>
-            <h5>Embed Title </h5>
-            <br>
-            <label for="webhookTitleEmbed">Title:</label>
-            <input type="text" id="webhookTitleEmbed" name="webhookTitleEmbed"><br><br>
-
-            <label for="webhookTitleLink">Title Link: (Blank for none)</label>
-            <input type="text" id="webhookTitleLink" name="webhookTitleLink"><br><br>
-
-            <label for="webhookTitleDescription">Title Description:</label>
-            <input type="text" id="webhookTitleDescription" name="webhookTitleDescription"><br><br>
-        </div>
         
-
-        <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
-        <br>
+    </div>
 
 
-        <br>
-        <div id="webhook-info" style="display: none;">
-            <h5>About This Webhook</h6>
-                <br>
-                <h6>Webhook Profile Picture: <img id="webhookDCPFP"></img> </h6>
-                <h6 id="webhookDCName">Current Username:</h6>
-                <h6 id="webhookDCID">Webhook ID</h6>
-                <h6 id="webhookDCGuild">Guild ID</h6>
-                <h6 id="webhookDCChannel">Channel ID</h6>
-                <h6 id="webhookDCToken">Token</h6>
-                <h6 id="webhookDCFullURL">Full URL: </h6>
-                <h6 id="webhookDCType">Webhook Type: </h6>
-                <br>
-                <h5>About Webhook Creator</h5>
-                <br>
-                <h6 id="webhookDCUserID">Creator ID:</h6>
-                <h6><img id="webhookDCUser" src=""></img> </h6>
+    <div id="config">
 
-        </div>
+        <label for="username">Webhook Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+
+        <label for="webhookavatar">Webhook Avatar: (Leave blank to use default)</label>
+        <input type="text" id="webhookavatar" name="webhookavatar"><br><br>
+
+        <label for="webhooktext">Webhook Text:</label>
+        <input type="text" id="webhooktext" name="webhooktext"><br><br>
+
+        <button onclick="sendWebhook()" id="sendbutton">Send</button>
+        <button onclick="getWebhookInfo()" id="getbutton">Get Webhook Info</button>
+
+    </div>
+    <br>
+    <div id="embedconfig">
+        <h5>Author Label</h5>
+        <label for="embedauthor">Author Name:</label>
+        <input type="text" id="embedauthor" name="embedauthor"><br><br>
+
+        <label for="webhookavatarEmbed">Author Icon: (Blank for none)</label>
+        <input type="text" id="webhookavatarEmbed" name="webhookavatarEmbed"><br><br>
         <br>
+        <h5>Embed Title </h5>
         <br>
+        <label for="webhookTitleEmbed">Title:</label>
+        <input type="text" id="webhookTitleEmbed" name="webhookTitleEmbed"><br><br>
+
+        <label for="webhookTitleLink">Title Link: (Blank for none)</label>
+        <input type="text" id="webhookTitleLink" name="webhookTitleLink"><br><br>
+
+        <label for="webhookTitleDescription">Title Description:</label>
+        <input type="text" id="webhookTitleDescription" name="webhookTitleDescription"><br><br>
+    </div>
+
+
+    <button onclick="deleteWebhook()" id="deletebutton">Delete</button>
+    <br>
+
+
+    <br>
+    <div id="webhook-info" style="display: none;">
+        <h5>About This Webhook</h6>
+            <br>
+            <h6>Webhook Profile Picture: <img id="webhookDCPFP"></img> </h6>
+            <h6 id="webhookDCName">Current Username:</h6>
+            <h6 id="webhookDCID">Webhook ID</h6>
+            <h6 id="webhookDCGuild">Guild ID</h6>
+            <h6 id="webhookDCChannel">Channel ID</h6>
+            <h6 id="webhookDCToken">Token</h6>
+            <h6 id="webhookDCFullURL">Full URL: </h6>
+            <h6 id="webhookDCType">Webhook Type: </h6>
+            <br>
+            <h5>About Webhook Creator</h5>
+            <br>
+            <h6 id="webhookDCUserID">Creator ID:</h6>
+            <h6><img id="webhookDCUser" src=""></img> </h6>
+
+    </div>
+    <br>
+    <br>
     </center>
 </body>
 
 <div class="footer">
     Developed by byeoon <br>
-   Version 1.2 |  <a href="https://github.com/byeoon/WHUtils">WHUtils is fully open source!</a> <br>
+    Version 1.2 | <a href="https://github.com/byeoon/WHUtils">WHUtils is fully open source!</a> <br>
 </div>
 
 </html>
@@ -164,7 +172,7 @@
         }
     });
 
-        ttscb.addEventListener("change", () => {
+    ttscb.addEventListener("change", () => {
         if (ttscb.checked) {
             webhookTTS = true;
         } else {
@@ -216,7 +224,7 @@
                 }
             ],
             tts: webhookTTS
-            
+
         }
 
         if (embedMode == false) {
