@@ -7,8 +7,8 @@ body {
 .header {
     padding: 12px !important;
     text-align: center;
-    background: #17143f;
-    filter: drop-shadow(0 0 0.95rem rgb(64, 66, 175));
+    background: #282b30;
+    filter: drop-shadow(0 0 0.95rem rgb(0, 0, 0));
 }
 
 .container {
@@ -19,11 +19,6 @@ body {
 
 .main {
     display: none;
-}
-
-
-.main.active {
-    display: block;
 }
 
 #centerscreen {
